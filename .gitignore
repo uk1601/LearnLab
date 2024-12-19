@@ -1,0 +1,87 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv
+env/
+venv/
+ENV/
+.env.local
+
+# Node
+node_modules/
+.next/
+out/
+build/
+.DS_Store
+*.pem
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.zed
+
+# Airflow
+airflow/logs/
+airflow/airflow.db
+airflow/airflow-webserver.pid
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Poetry
+dist/
+*.egg-info/
+
+
+# Backend
+backend/logs*
+backend/logs/*
+backend/logs/2024-12-01_app.log
+
+
+# Secrets
+blogger_api.json
+
+docker/postgres/quiz/00_cleanup.sql
+docker/postgres/quiz/01_quizzes.sql
+docker/postgres/quiz/02_questions.sql
+docker/postgres/quiz/03_multiple_choice_options.sql
+docker/postgres/quiz/04_subjective_answers.sql
+docker/postgres/quiz/05_question_concepts.sql
+docker/postgres/quiz/06_quiz_attempts.sql
+docker/postgres/quiz/07_question_responses.sql
+docker/postgres/quiz/08_verify.sql
+backend/docs/quiz/api-reference.md
+backend/docs/quiz/frontend-components.md
+backend/docs/quiz/frontend-workflow.md
+notes/deletedsql.md
+docker/postgres/quiz/README.md
+backend/sample_data/flashcards.json
+backend/sample_data/Model-Card-Claude-2.pdf
+backend/sample_data/podcast_episode.mp3
+backend/sample_data/podcasts.json
+backend/sample_data/quizzes.json
+backend/sample_data/audio/podcast_episode.mp3
+backend/sample_data/files/machine_learning_basics.txt
+backend/sample_data/files/Model-Card-Claude-2.pdf
+backend/sample_data/transcripts/deep_learning_basics.txt
+backend/sample_data/transcripts/deep_learning_basics.vtt
+backend/sample_data/transcripts/ml_introduction.txt
+backend/sample_data/transcripts/ml_introduction.vtt
+
+docker-compose.prod1.yml
+token.pickle

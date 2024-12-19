@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "learnlab-airflow"
+version = "0.1.0"
+description = "LearnLab Airflow DAGs and configurations"
+authors = ["surya <rebbapragada.s@northeastern.edu>"]
+
+[tool.poetry.dependencies]
+python = "<3.13,>=3.9"
+semantic-router = "^0.0.72"
+pinecone = "^5.4.2"
+pypdf2 = "^3.0.1"
+python-dotenv = "^1.0.1"
+apache-airflow = "^2.10.3"
+boto3 = "^1.35.79"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

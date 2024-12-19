@@ -1,0 +1,68 @@
+# Exclude the .env file
+.env
+
+# Exclude secrets directory
+secrets/
+
+# Exclude db creds in infra directory
+infra/db_credentials.txt
+
+# Exclude cached and compiled files
+__pycache__/
+*.pyc
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+
+# Ignore virtual environment directories
+.venv/
+env/
+venv/
+
+# Ignore Git and version control system files
+.git/
+.gitignore
+
+# Ignore build artifacts
+build/
+dist/
+*.egg-info/
+
+# Ignore temporary files and directories
+*.swp
+*.swo
+.DS_Store
+*.tmp
+*.bak
+
+# Ignore local environment files
+.env
+.env.*
+
+# Ignore IDE/editor configurations
+.vscode/
+.idea/
+
+# Ignore testing-related files
+tests/
+coverage/
+*.coverage
+
+# Ignore node_modules for frontend (if applicable)
+frontend/node_modules/
+
+# Ignore unwanted frontend build files
+frontend/build/
+frontend/dist/
+
+# Ignore Streamlit temporary files
+streamlit-ui/.streamlit/
+streamlit-ui/__pycache__/
+
+# Ignore any custom temporary files
+temp/
+tmp/

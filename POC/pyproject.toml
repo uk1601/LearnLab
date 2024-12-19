@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "poc"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+package-mode = false
+[tool.poetry.dependencies]
+python = "~3.12"
+docling = "^2.8.3"
+langchain = "^0.3.10"
+llama-index = "^0.12.3"
+langchain-community = "^0.3.10"
+python-dotenv = "^1.0.1"
+pydantic = ">=2.0.0,<2.10"
+langchain-openai = "^0.2.11"
+boto3 = "^1.35.76"
+requests = "^2.32.3"
+markdown = "^3.7"
+requests-oauthlib = "^2.0.0"
+ffmpeg = "^1.4"
+psycopg2-binary = "^2.9.10"
+semantic-router = "^0.0.72"
+python-medium = "^1.1"
+google-auth = "^2.37.0"
+google-auth-oauthlib = "^1.2.1"
+google-auth-httplib2 = "^0.2.0"
+google-api-python-client = "^2.155.0"
+ratelimit = "^2.2.1"
+backoff = "^2.2.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

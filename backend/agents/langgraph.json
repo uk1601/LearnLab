@@ -1,0 +1,11 @@
+{
+    "dockerfile_lines": [],
+    "graphs": {
+        "chat": "./learn_lab_assistant_agent.py:Graph"
+    },
+    "env": "./.env",
+    "python_version": "3.12",
+    "dependencies": [
+        "./"
+    ]
+}

@@ -1,0 +1,219 @@
+/* globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    /* Brand Colors - Base */
+    --hunyadi-yellow: 37 93% 90%;  /* Much lighter yellow */
+    --eerie-black: 30 4% 10%;      /* #1b1a19 - Text */
+    --light-blue: 191 39% 69%;     /* #90c3ce - Primary */
+    --pumpkin: 24 90% 55%;         /* #f37926 - Action */
+    --wisteria: 263 55% 78%;       /* #c0a8e6 - Secondary */
+    --dutch-white: 38 73% 98%;     /* Much lighter background */
+    
+    /* Base Colors */
+    --background: 38 73% 98%;      /* Updated to much lighter shade */
+    --foreground: 30 4% 10%;       
+    
+    /* Card Colors */
+    --card: 0 0% 100%;
+    --card-foreground: 30 4% 10%;
+    
+    /* Popover Colors */
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 4% 10%;
+    
+    /* Semantic Colors */
+    --primary: 191 39% 69%;         
+    --primary-foreground: 30 4% 10%;
+    --primary-muted: 191 39% 79%;
+    
+    --secondary: 263 55% 78%;       
+    --secondary-foreground: 30 4% 10%;
+    --secondary-muted: 263 55% 88%;
+    
+    --accent: 24 90% 55%;          
+    --accent-foreground: 0 0% 100%;
+    --accent-muted: 24 90% 65%;
+    
+    --warning: 37 93% 71%;         
+    --warning-foreground: 30 4% 10%;
+    --warning-muted: 37 93% 81%;
+    
+    --success: 142 72% 29%;        
+    --success-foreground: 0 0% 100%;
+    --success-muted: 142 72% 39%;
+    
+    --destructive: 0 84% 60%;      
+    --destructive-foreground: 0 0% 100%;
+    --destructive-muted: 0 84% 70%;
+    
+    /* Muted Colors */
+    --muted: 38 73% 95%;
+    --muted-foreground: 30 4% 30%;
+    
+    /* Interactive Elements */
+    --border: 30 4% 10%;           
+    --input: 38 73% 90%;
+    --ring: 191 39% 69%;           
+    
+    /* Border Radius */
+    --radius: 0.5rem;              
+  }
+ 
+  .dark {
+    /* Dark mode */
+    --background: 30 4% 10%;        
+    --foreground: 38 73% 85%;      
+    
+    --card: 30 4% 13%;
+    --card-foreground: 38 73% 85%;
+    
+    --popover: 30 4% 13%;
+    --popover-foreground: 38 73% 85%;
+    
+    /* Semantic Colors - Dark */
+    --primary: 191 39% 59%;
+    --primary-foreground: 0 0% 100%;
+    --primary-muted: 191 39% 49%;
+    
+    --secondary: 263 55% 68%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-muted: 263 55% 58%;
+    
+    --accent: 24 90% 45%;
+    --accent-foreground: 0 0% 100%;
+    --accent-muted: 24 90% 35%;
+    
+    --warning: 37 93% 61%;
+    --warning-foreground: 30 4% 10%;
+    --warning-muted: 37 93% 51%;
+    
+    --success: 142 72% 35%;
+    --success-foreground: 0 0% 100%;
+    --success-muted: 142 72% 25%;
+    
+    --destructive: 0 84% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-muted: 0 84% 40%;
+    
+    --muted: 30 4% 15%;
+    --muted-foreground: 38 73% 75%;
+    
+    --border: 38 73% 85%;
+    --input: 30 4% 20%;
+    --ring: 191 39% 59%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Typography Scale */
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl font-bold tracking-tight mb-3;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl font-semibold tracking-tight mb-2;
+  }
+
+  p {
+    @apply leading-7 [&:not(:first-child)]:mt-6;
+  }
+}
+
+@layer components {
+  /* Button Base */
+  .btn-base {
+    @apply inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium 
+    transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 
+    focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50
+    border-2 border-transparent hover:scale-[1.02];
+  }
+
+  /* Button Variants */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/90;
+  }
+
+  .btn-accent {
+    @apply bg-accent text-accent-foreground hover:bg-accent/90;
+  }
+
+  .btn-destructive {
+    @apply bg-destructive text-destructive-foreground hover:bg-destructive/90;
+  }
+
+  /* Card Design */
+  .card-base {
+    @apply rounded-lg bg-card text-card-foreground border-2 border-border
+    transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+
+  .card-interactive {
+    @apply cursor-pointer hover:-translate-y-1;
+  }
+
+  /* Feature Cards */
+  .feature-card {
+    @apply p-6 space-y-2 rounded-lg border-2 transition-all duration-200
+    hover:shadow-lg hover:-translate-y-1;
+  }
+
+  /* Layout */
+  .container-base {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-base {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  /* Forms */
+  .form-group {
+    @apply space-y-2;
+  }
+
+  .form-input {
+    @apply w-full rounded-md border-2 bg-transparent px-3 py-2 text-sm
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+    disabled:cursor-not-allowed disabled:opacity-50;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent to-primary;
+  }
+
+  .bg-gradient {
+    @apply bg-gradient-to-r from-accent/10 to-primary/10;
+  }
+
+  /* Animations */
+  .animate-fade-in {
+    @apply animate-[fadeIn_0.3s_ease-in-out_forwards];
+  }
+
+  .animate-slide-up {
+    @apply animate-[slideUp_0.3s_ease-out_forwards];
+  }
+}
