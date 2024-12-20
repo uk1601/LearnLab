@@ -1,0 +1,111 @@
+name: 1. CI Testing
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  PYTHON_VERSION: '3.12'
+  POETRY_VERSION: '1.7.0'
+  PYTHONPATH: ${{ github.workspace }}/backend
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+  JWT_ALGORITHM: ${{ secrets.JWT_ALGORITHM }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
+  DEBUG: "True"
+  ENVIRONMENT: "test"
+  NODE_VERSION: '18'
+  NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+
+jobs:
+  backend-test:
+    name: Run Backend Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    if: ${{ github.event.pull_request.head.repo.full_name != github.repository }} || ${{ github.event.pull_request.head.ref != github.base_ref }}
+    steps:
+      # Run only if there are changes in the backend directory
+      - name: Check changes in backend
+        if: ${{ contains(github.event.pull_request.changed_files, 'backend/') }}
+        run: echo "Changes detected in backend directory, running backend tests."
+      
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      
+      # Step 3: Verify required secrets
+      - name: Verify required secrets
+        run: |
+          echo "Verifying required secrets..."
+          required_secrets=(
+            DATABASE_URL
+            JWT_SECRET_KEY
+            JWT_ALGORITHM
+            AWS_ACCESS_KEY_ID
+            AWS_SECRET_ACCESS_KEY
+            AWS_BUCKET_NAME
+            AWS_REGION
+          )
+          for secret in "${required_secrets[@]}"; do
+            if [ -z "${!secret}" ]; then
+              echo "Error: $secret is not set!"
+              exit 1
+            else
+              echo "Verified secret: $secret"
+            fi
+          done
+          echo "All required secrets verified."
+      
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: ${{ env.POETRY_VERSION }}
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+        
+      # - name: Install dependencies
+      #   run: poetry install --no-root
+
+      # - name: Run tests
+      #   run: poetry run pytest tests/ -v
+  frontend-test:
+    name: Run Frontend Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    if: ${{ contains(github.event.pull_request.changed_files, 'frontend/') }}
+    steps:
+      - name: Check changes in frontend
+        if: ${{ contains(github.event.pull_request.changed_files, 'frontend/') }}
+        run: echo "Changes detected in frontend directory, running frontend tests."
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ./frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --force
+
+      - name: Run ESLint
+        run: npm run lint
