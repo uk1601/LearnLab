@@ -19,7 +19,7 @@
 ## 👥 Team
 
 - Sai Surya Madhav Rebbapragada
-- Uday Kiran Dasari (Project Manager)
+- Uday Kiran Dasari
 - Venkat Akash Varun Pemmaraju
 
 ## 🎯 Overview
