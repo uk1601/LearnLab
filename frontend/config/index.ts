@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://34.45.163.161:8000";
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://backend:8000" || "http://localhost:8000" ;
 console.log('-----------API_BASE_URL----------', API_BASE_URL);
 export const API_ROUTES = {
   auth: {

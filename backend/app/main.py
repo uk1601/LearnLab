@@ -3,10 +3,22 @@ from fastapi.middleware.cors import CORSMiddleware
 from .api.v1 import auth, files, flashcards, podcast, quiz, websocket, sample_data, generate, chat, social
 from .core.config import settings
 from .core.database import engine, Base
+from .core.health_check import perform_health_checks
 
 from fastapi.responses import StreamingResponse
 from openai import AsyncOpenAI
 import json
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler()  # Output to console
+    ]
+)
+logger = logging.getLogger(__name__)
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -44,6 +56,14 @@ async def custom_cors_middleware(request: Request, call_next):
     response.headers["Access-Control-Allow-Methods"] = "*"
     response.headers["Access-Control-Allow-Headers"] = "*"
     return response
+
+
+# Run health checks at startup
+@app.on_event("startup")
+async def startup_event():
+    logger.info("🚀 Starting LearnLab API server...")
+    health_status = perform_health_checks()
+    app.state.health_status = health_status
 
 # Include routers
 app.include_router(
@@ -125,7 +145,19 @@ async def root():
 
 @app.get("/health")
 async def health_check():
+    """
+    Health check endpoint that verifies connections to all required services.
+    """
+    # Run a fresh check
+    from .core.health_check import check_database_connection
+    
+    current_db_status = check_database_connection()
+    
+    status = "healthy" if current_db_status else "unhealthy"
+    
     return {
-        "status": "healthy",
-        "message": "Service is running"
-    }    
+        "status": status,
+        "database": current_db_status,
+        "uptime": "running",  # You could add actual uptime calculation here
+        "environment": settings.ENVIRONMENT
+    }

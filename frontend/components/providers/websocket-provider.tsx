@@ -38,7 +38,14 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    const wsUrl = `http://34.45.163.161:8000/ws?token=${token}`;
+    // const wsUrl = `http://backend:8000/ws?token=${token}`;
+    // Get the base URL from environment variables
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://backend:8000" || "http://localhost:8000" ;
+
+    // Replace http:// with ws:// for WebSocket protocol
+    const wsProtocol = baseUrl.startsWith('https') ? 'wss' : 'ws';
+    const wsBase = baseUrl.replace(/^http(s)?:\/\//, '');
+    const wsUrl = `${wsProtocol}://${wsBase}/ws?token=${token}`;
     console.log(process.env.NEXT_PUBLIC_WS_URL)
 
     console.log('Connecting to WebSocket...');

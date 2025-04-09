@@ -85,3 +85,5 @@ backend/sample_data/transcripts/ml_introduction.vtt
 
 docker-compose.prod1.yml
 token.pickle
+logs/*
+*.log

@@ -1,8 +1,22 @@
 version: '3.8'
 
 services:
+  backend:
+    image: udaykirandasari/learnlab-backend:latest
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=False
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - learnlab-network
+    
   frontend:
-    # image: ${DOCKER_USERNAME}/learnlab-frontend:latest
     image: udaykirandasari/learnlab-frontend:latest
     ports:
       - "3000:3000"
@@ -14,20 +28,29 @@ services:
       - backend
     networks:
       - learnlab-network
-    
-  backend:
-    # image: ${DOCKER_USERNAME}/learnlab-backend:latest
-    image: udaykirandasari/learnlab-backend:latest
+  
+  db:
+    image: postgres:15-alpine
     ports:
-      - "8000:8000"
-    env_file:
-      - ./.env
+      - "5432:5432"
+    volumes:
+      - type: tmpfs
+        target: /var/lib/postgresql/data
+      - ./docker/postgres/create-multiple-databases.sh:/docker-entrypoint-initdb.d/00-create-multiple-databases.sh
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./docker/postgres/sample_data.sql:/docker-entrypoint-initdb.d/02-sample_data.sql
+      - ./docker/postgres/quiz:/docker-entrypoint-initdb.d/03-quiz/run_all.sh
     environment:
-      - ENVIRONMENT=production
-      - DEBUG=False
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_MULTIPLE_DATABASES=airflow,learnlab
     networks:
       - learnlab-network
-    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:
